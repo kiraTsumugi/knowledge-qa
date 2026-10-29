@@ -1,0 +1,170 @@
+{
+  "case": "conflict",
+  "description": "文档冲突：D01(30天) vs D02(15天)，列冲突请求确认",
+  "question": "报销期限多久",
+  "history": [],
+  "model_mode": "offline-mock",
+  "status": "needs_clarification",
+  "answer": "",
+  "quotes": [],
+  "conflicts": [
+    {
+      "section_key": "报销期限",
+      "candidates": [
+        {
+          "doc_id": "D01",
+          "version_date": "2026-01-15",
+          "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+          "numbers": [
+            "30"
+          ]
+        },
+        {
+          "doc_id": "D02",
+          "version_date": "2026-06-01",
+          "text": "各类费用报销期限为费用发生之日起 15 天内。",
+          "numbers": [
+            "15"
+          ]
+        }
+      ]
+    }
+  ],
+  "gap": [
+    "请确认适用哪一份制度，或提供更具体的场景（如：国内出差/办公费用）"
+  ],
+  "final": {
+    "action": "finish",
+    "status": "needs_clarification",
+    "reason": "多个文档对同一问题给出不同答案，需确认适用范围",
+    "conflicts": [
+      {
+        "section_key": "报销期限",
+        "candidates": [
+          {
+            "doc_id": "D01",
+            "version_date": "2026-01-15",
+            "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+            "numbers": [
+              "30"
+            ]
+          },
+          {
+            "doc_id": "D02",
+            "version_date": "2026-06-01",
+            "text": "各类费用报销期限为费用发生之日起 15 天内。",
+            "numbers": [
+              "15"
+            ]
+          }
+        ]
+      }
+    ],
+    "gap": [
+      "请确认适用哪一份制度，或提供更具体的场景（如：国内出差/办公费用）"
+    ]
+  },
+  "trace": [
+    {
+      "n": 1,
+      "action": "search_docs",
+      "args": {
+        "query": "报销期限多久"
+      },
+      "reason": "检索相关文档",
+      "observation": {
+        "ok": true,
+        "query": "报销期限多久",
+        "normalized_query": "报销期限期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "差旅报销制度",
+            "version_date": "2026-01-15",
+            "section_key": "报销期限",
+            "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+            "score": 3.0
+          },
+          {
+            "doc_id": "D02",
+            "title": "费用报销管理办法",
+            "version_date": "2026-06-01",
+            "section_key": "报销期限",
+            "text": "各类费用报销期限为费用发生之日起 15 天内。",
+            "score": 3.0
+          }
+        ],
+        "doc_ids": [
+          "D01",
+          "D02"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "action": "read_doc",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "读取 D01 原文以核对引用",
+      "observation": {
+        "ok": true,
+        "doc_id": "D01",
+        "title": "差旅报销制度",
+        "version_date": "2026-01-15",
+        "sections": [
+          {
+            "key": "报销期限",
+            "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。"
+          },
+          {
+            "key": "报销材料",
+            "text": "报销需提供发票原件与出差申请单。"
+          },
+          {
+            "key": "适用范围",
+            "text": "本制度适用于国内出差产生的交通与住宿费用。"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "action": "read_doc",
+      "args": {
+        "doc_id": "D02"
+      },
+      "reason": "读取 D02 原文以核对引用",
+      "observation": {
+        "ok": true,
+        "doc_id": "D02",
+        "title": "费用报销管理办法",
+        "version_date": "2026-06-01",
+        "sections": [
+          {
+            "key": "报销期限",
+            "text": "各类费用报销期限为费用发生之日起 15 天内。"
+          },
+          {
+            "key": "报销范围",
+            "text": "适用办公用品、交通、餐饮等费用的报销。"
+          },
+          {
+            "key": "审批流程",
+            "text": "报销单需直属主管与财务两级审批。"
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "action": "finish",
+      "args": {},
+      "reason": "多个文档对同一问题给出不同答案，需确认适用范围",
+      "observation": {
+        "finished": true,
+        "status": "needs_clarification"
+      }
+    }
+  ]
+}

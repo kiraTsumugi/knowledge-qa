@@ -1,0 +1,115 @@
+{
+  "case": "scoped_no_conflict",
+  "description": "带场景限定：仅 D01 相关，依据 D01 作答",
+  "question": "出差报销要多久",
+  "history": [],
+  "model_mode": "offline-mock",
+  "status": "answered",
+  "answer": "依据 D01《差旅报销制度》：出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+  "quotes": [
+    {
+      "doc_id": "D01",
+      "section_key": "报销期限",
+      "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+      "version_date": "2026-01-15"
+    }
+  ],
+  "conflicts": [],
+  "gap": [],
+  "final": {
+    "action": "finish",
+    "status": "answered",
+    "answer": "依据 D01《差旅报销制度》：出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+    "quotes": [
+      {
+        "doc_id": "D01",
+        "section_key": "报销期限",
+        "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+        "version_date": "2026-01-15"
+      }
+    ],
+    "reason": "检索到唯一相关文档，依据原文作答"
+  },
+  "trace": [
+    {
+      "n": 1,
+      "action": "search_docs",
+      "args": {
+        "query": "出差报销要多久"
+      },
+      "reason": "检索相关文档",
+      "observation": {
+        "ok": true,
+        "query": "出差报销要多久",
+        "normalized_query": "出差报销要期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "差旅报销制度",
+            "version_date": "2026-01-15",
+            "section_key": "报销期限",
+            "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。",
+            "score": 2.0
+          },
+          {
+            "doc_id": "D01",
+            "title": "差旅报销制度",
+            "version_date": "2026-01-15",
+            "section_key": "报销材料",
+            "text": "报销需提供发票原件与出差申请单。",
+            "score": 1.5
+          },
+          {
+            "doc_id": "D01",
+            "title": "差旅报销制度",
+            "version_date": "2026-01-15",
+            "section_key": "适用范围",
+            "text": "本制度适用于国内出差产生的交通与住宿费用。",
+            "score": 1.0
+          }
+        ],
+        "doc_ids": [
+          "D01"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "action": "read_doc",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "读取 D01 原文以核对引用",
+      "observation": {
+        "ok": true,
+        "doc_id": "D01",
+        "title": "差旅报销制度",
+        "version_date": "2026-01-15",
+        "sections": [
+          {
+            "key": "报销期限",
+            "text": "出差费用报销期限为出差结束后 30 天内，逾期不予受理。"
+          },
+          {
+            "key": "报销材料",
+            "text": "报销需提供发票原件与出差申请单。"
+          },
+          {
+            "key": "适用范围",
+            "text": "本制度适用于国内出差产生的交通与住宿费用。"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "action": "finish",
+      "args": {},
+      "reason": "检索到唯一相关文档，依据原文作答",
+      "observation": {
+        "finished": true,
+        "status": "answered"
+      }
+    }
+  ]
+}

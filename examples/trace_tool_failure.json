@@ -1,0 +1,62 @@
+{
+  "case": "tool_failure",
+  "description": "工具失败：重试一次后明确失败",
+  "question": "触发故障的提问",
+  "history": [],
+  "model_mode": "offline-mock",
+  "status": "tool_error",
+  "answer": "",
+  "quotes": [],
+  "conflicts": [],
+  "gap": [
+    "检索工具连续失败，请稍后重试"
+  ],
+  "final": {
+    "action": "finish",
+    "status": "tool_error",
+    "reason": "检索服务不可用，无法获取依据",
+    "gap": [
+      "检索工具连续失败，请稍后重试"
+    ]
+  },
+  "trace": [
+    {
+      "n": 1,
+      "action": "search_docs",
+      "args": {
+        "query": "触发故障的提问"
+      },
+      "reason": "检索相关文档",
+      "observation": {
+        "ok": false,
+        "error": "tool_error",
+        "tool": "search_docs",
+        "message": "检索服务暂时不可用（故障注入）"
+      }
+    },
+    {
+      "n": 2,
+      "action": "search_docs",
+      "args": {
+        "query": "触发故障的提问"
+      },
+      "reason": "检索工具失败，重试一次",
+      "observation": {
+        "ok": false,
+        "error": "tool_error",
+        "tool": "search_docs",
+        "message": "检索服务暂时不可用（故障注入）"
+      }
+    },
+    {
+      "n": 3,
+      "action": "finish",
+      "args": {},
+      "reason": "检索服务不可用，无法获取依据",
+      "observation": {
+        "finished": true,
+        "status": "tool_error"
+      }
+    }
+  ]
+}

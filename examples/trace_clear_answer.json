@@ -1,0 +1,103 @@
+{
+  "case": "clear_answer",
+  "description": "明确答案：附 D03 引用原文",
+  "question": "年假有多少天",
+  "history": [],
+  "model_mode": "offline-mock",
+  "status": "answered",
+  "answer": "依据 D03《员工年假制度》：年假天数：入职满一年可休 5 天，满三年 10 天，满五年 15 天。",
+  "quotes": [
+    {
+      "doc_id": "D03",
+      "section_key": "年假天数",
+      "text": "年假天数：入职满一年可休 5 天，满三年 10 天，满五年 15 天。",
+      "version_date": "2026-03-01"
+    }
+  ],
+  "conflicts": [],
+  "gap": [],
+  "final": {
+    "action": "finish",
+    "status": "answered",
+    "answer": "依据 D03《员工年假制度》：年假天数：入职满一年可休 5 天，满三年 10 天，满五年 15 天。",
+    "quotes": [
+      {
+        "doc_id": "D03",
+        "section_key": "年假天数",
+        "text": "年假天数：入职满一年可休 5 天，满三年 10 天，满五年 15 天。",
+        "version_date": "2026-03-01"
+      }
+    ],
+    "reason": "检索到唯一相关文档，依据原文作答"
+  },
+  "trace": [
+    {
+      "n": 1,
+      "action": "search_docs",
+      "args": {
+        "query": "年假有多少天"
+      },
+      "reason": "检索相关文档",
+      "observation": {
+        "ok": true,
+        "query": "年假有多少天",
+        "normalized_query": "年假有多少天",
+        "hits": [
+          {
+            "doc_id": "D03",
+            "title": "员工年假制度",
+            "version_date": "2026-03-01",
+            "section_key": "年假天数",
+            "text": "年假天数：入职满一年可休 5 天，满三年 10 天，满五年 15 天。",
+            "score": 1.0
+          },
+          {
+            "doc_id": "D03",
+            "title": "员工年假制度",
+            "version_date": "2026-03-01",
+            "section_key": "申请方式",
+            "text": "年假需提前 3 天在 OA 系统提交申请。",
+            "score": 1.0
+          }
+        ],
+        "doc_ids": [
+          "D03"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "action": "read_doc",
+      "args": {
+        "doc_id": "D03"
+      },
+      "reason": "读取 D03 原文以核对引用",
+      "observation": {
+        "ok": true,
+        "doc_id": "D03",
+        "title": "员工年假制度",
+        "version_date": "2026-03-01",
+        "sections": [
+          {
+            "key": "年假天数",
+            "text": "年假天数：入职满一年可休 5 天，满三年 10 天，满五年 15 天。"
+          },
+          {
+            "key": "申请方式",
+            "text": "年假需提前 3 天在 OA 系统提交申请。"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "action": "finish",
+      "args": {},
+      "reason": "检索到唯一相关文档，依据原文作答",
+      "observation": {
+        "finished": true,
+        "status": "answered"
+      }
+    }
+  ]
+}

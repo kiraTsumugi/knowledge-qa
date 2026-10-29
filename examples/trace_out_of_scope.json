@@ -1,0 +1,49 @@
+{
+  "case": "out_of_scope",
+  "description": "资料外问题：返回缺口，绝不编造",
+  "question": "食堂几点开饭",
+  "history": [],
+  "model_mode": "offline-mock",
+  "status": "not_found",
+  "answer": "",
+  "quotes": [],
+  "conflicts": [],
+  "gap": [
+    "知识库无相关文档，请补充资料或换一种问法"
+  ],
+  "final": {
+    "action": "finish",
+    "status": "not_found",
+    "reason": "知识库中未找到与该问题相关的文档",
+    "gap": [
+      "知识库无相关文档，请补充资料或换一种问法"
+    ]
+  },
+  "trace": [
+    {
+      "n": 1,
+      "action": "search_docs",
+      "args": {
+        "query": "食堂几点开饭"
+      },
+      "reason": "检索相关文档",
+      "observation": {
+        "ok": true,
+        "query": "食堂几点开饭",
+        "normalized_query": "食堂几点开饭",
+        "hits": [],
+        "doc_ids": []
+      }
+    },
+    {
+      "n": 2,
+      "action": "finish",
+      "args": {},
+      "reason": "知识库中未找到与该问题相关的文档",
+      "observation": {
+        "finished": true,
+        "status": "not_found"
+      }
+    }
+  ]
+}

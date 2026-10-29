@@ -1,0 +1,103 @@
+{
+  "case": "paraphrase",
+  "description": "改写相似问题：同义词归一化后命中 D05",
+  "question": "退款什么时候到账",
+  "history": [],
+  "model_mode": "offline-mock",
+  "status": "answered",
+  "answer": "依据 D05《产品退款政策》：支持自购买之日起 7 天内无理由退款。",
+  "quotes": [
+    {
+      "doc_id": "D05",
+      "section_key": "退款时限",
+      "text": "支持自购买之日起 7 天内无理由退款。",
+      "version_date": "2026-05-01"
+    }
+  ],
+  "conflicts": [],
+  "gap": [],
+  "final": {
+    "action": "finish",
+    "status": "answered",
+    "answer": "依据 D05《产品退款政策》：支持自购买之日起 7 天内无理由退款。",
+    "quotes": [
+      {
+        "doc_id": "D05",
+        "section_key": "退款时限",
+        "text": "支持自购买之日起 7 天内无理由退款。",
+        "version_date": "2026-05-01"
+      }
+    ],
+    "reason": "检索到唯一相关文档，依据原文作答"
+  },
+  "trace": [
+    {
+      "n": 1,
+      "action": "search_docs",
+      "args": {
+        "query": "退款什么时候到账"
+      },
+      "reason": "检索相关文档",
+      "observation": {
+        "ok": true,
+        "query": "退款什么时候到账",
+        "normalized_query": "退款时间到账",
+        "hits": [
+          {
+            "doc_id": "D05",
+            "title": "产品退款政策",
+            "version_date": "2026-05-01",
+            "section_key": "退款时限",
+            "text": "支持自购买之日起 7 天内无理由退款。",
+            "score": 3.0
+          },
+          {
+            "doc_id": "D05",
+            "title": "产品退款政策",
+            "version_date": "2026-05-01",
+            "section_key": "退款到账",
+            "text": "退款将原路退回，预计 3-5 个工作日到账。",
+            "score": 2.0
+          }
+        ],
+        "doc_ids": [
+          "D05"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "action": "read_doc",
+      "args": {
+        "doc_id": "D05"
+      },
+      "reason": "读取 D05 原文以核对引用",
+      "observation": {
+        "ok": true,
+        "doc_id": "D05",
+        "title": "产品退款政策",
+        "version_date": "2026-05-01",
+        "sections": [
+          {
+            "key": "退款时限",
+            "text": "支持自购买之日起 7 天内无理由退款。"
+          },
+          {
+            "key": "退款到账",
+            "text": "退款将原路退回，预计 3-5 个工作日到账。"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "action": "finish",
+      "args": {},
+      "reason": "检索到唯一相关文档，依据原文作答",
+      "observation": {
+        "finished": true,
+        "status": "answered"
+      }
+    }
+  ]
+}
