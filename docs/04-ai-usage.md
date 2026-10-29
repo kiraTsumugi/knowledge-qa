@@ -8,7 +8,7 @@
 | 数据结构设计 | 是 | Quote 结构保证引用；状态正交 |
 | 代码实现 | 是 | src/ 全部初稿由 AI（Claude Code）生成 |
 | 冲突/检索设计 | 是 | IDF 加权、unique-token 优先、同义词归一化 |
-| 测试编写 | 是 | tests/ 23 项由 AI 生成 |
+| 测试编写 | 是 | tests/ 29 项由 AI 生成 |
 | 运行验证 | 是 | 本地实际执行，见下 |
 | 文档撰写 | 是 | docs/ 由 AI 生成 |
 
@@ -26,10 +26,15 @@
 4. **引用安全硬校验**：AI 初稿只靠 prompt 要求引用；人工加了循环层拦截——
    `answered` 无 quotes 直接拒绝，不信任模型自律。
 5. **数据替换测试**：按审核要点"替换文档内容核对行为改变"，新增 `TestDataSwap`。
+6. **引用精度缺陷（最终回归发现）**："退款什么时候到账"经词表归一化后跨词滑窗产生
+   噪声 n-gram（"款时"），误命中"退款时限"（7天）而非"退款到账"（3-5工作日）——
+   引用了不直接支持问题的片段。人工改为**按同义词边界切分后再生成 n-gram**。
+7. **同义词表噪声（最终回归发现）**：临时测例"退款要几天"被"几天→天数"误引到 D03 年假。
+   删除过宽词条，并在 `synonyms.json` 注释中记录该陷阱。
 
 ## 验证记录
 
-- `python -m unittest discover -s tests -v` → 23 passed（本地实跑）
+- `python -m unittest discover -s tests -v` → 29 passed（本地实跑）
 - `python examples/generate_traces.py` → 7 组 Trace 落盘（本地实跑）
 - `python examples/verify_live_path.py` → HTTP 契约通过（本地实跑）
 - 人工逐份核对 `examples/trace_*.json` 决策链

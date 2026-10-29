@@ -2,7 +2,7 @@
 
 ## 测试预期 vs 实际结果
 
-全部测试：`python -m unittest discover -s tests -v` → **23 passed**。
+全部测试：`python -m unittest discover -s tests -v` → **29 passed**。
 
 | 用例 | 预期 | 实际 | 证据 |
 |---|---|---|---|
@@ -15,6 +15,8 @@
 | 工具失败 | `tool_error` | ✅ | `examples/trace_tool_failure.json` |
 | 无引用作答被拦截 | 循环层拒绝 | ✅ | `tests/test_agent.py::TestSafety` |
 | 数据替换行为改变 | 答案/状态随文档变化 | ✅ | `tests/test_agent.py::TestDataSwap` |
+| 引用精度 | 问"到账"引用"退款到账"片段 | ✅ | `tests/test_agent.py::TestQuotePrecision` |
+| 边界输入 | 空问题/纯标点/噪声 → `not_found` | ✅ | `tests/test_agent.py::TestEdgeInput` |
 | 畸形模型输出 ×2 | 不崩溃 | ✅ | `tests/test_agent.py::TestMalformedModelOutput` |
 
 ## ReAct 决策证据（核心）

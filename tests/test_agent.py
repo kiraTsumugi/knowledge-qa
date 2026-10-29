@@ -198,6 +198,42 @@ class TestStepLimit(unittest.TestCase):
         self.assertLessEqual(len([s for s in r.trace if s.action != "abort"]), MAX_STEPS)
 
 
+class TestQuotePrecision(unittest.TestCase):
+    """引用必须直接支持问题：问"到账"不得引用"退款时限"。"""
+
+    def test_refund_arrival_quotes_arrival_section(self):
+        r, _ = ask("退款什么时候到账")
+        self.assertEqual(r.status, "answered")
+        self.assertEqual(r.quotes[0].section_key, "退款到账")
+        self.assertIn("到账", r.quotes[0].text)
+
+    def test_refund_days_quotes_deadline_section(self):
+        r, _ = ask("退款要几天")
+        self.assertEqual(r.status, "answered")
+        self.assertEqual(r.quotes[0].doc_id, "D05")
+        self.assertEqual(r.quotes[0].section_key, "退款时限")
+
+    def test_synonym_does_not_misroute(self):
+        # "退款要几天"曾被"几天→天数"误引到 D03，回归防复现
+        r, _ = ask("退款要几天")
+        self.assertNotEqual(r.quotes[0].doc_id, "D03")
+
+
+class TestEdgeInput(unittest.TestCase):
+    def test_empty_question(self):
+        r, _ = ask("")
+        self.assertEqual(r.status, "not_found")
+        self.assertEqual(r.answer, "")
+
+    def test_punctuation_only(self):
+        r, _ = ask("？？？！")
+        self.assertEqual(r.status, "not_found")
+
+    def test_noise_input(self):
+        r, _ = ask("aaaaaaa随便问问没有实质内容")
+        self.assertEqual(r.status, "not_found")
+
+
 class TestDataSwap(unittest.TestCase):
     """审核要点：替换文档内容，答案/动作随之改变。"""
 

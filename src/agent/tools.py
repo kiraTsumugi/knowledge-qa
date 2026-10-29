@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from .models import DATA_DIR, Document, Hit
@@ -50,11 +51,34 @@ class Tools:
             text = text.replace(src, dst)
         return text
 
+    def _pieces(self, text: str) -> list[str]:
+        """按标点与同义词词条边界切分，避免跨词滑窗产生噪声 n-gram。
+
+        例："退款什么时候到账" → [退款, 什么时候, 到账]，
+        不会产生 "款时" 这类跨词噪声（否则会误命中"退款时限"）。
+        """
+        cuts = {0, len(text)}
+        for src in self._synonyms:
+            start = 0
+            while True:
+                i = text.find(src, start)
+                if i < 0:
+                    break
+                cuts.add(i)
+                cuts.add(i + len(src))
+                start = i + len(src)
+        bounds = sorted(cuts)
+        pieces: list[str] = []
+        for a, b in zip(bounds, bounds[1:]):
+            for seg in re.split(r"[，。！？、；;：:!?\s]+", text[a:b]):
+                if seg:
+                    pieces.append(seg)
+        return pieces
+
     def _tokens(self, text: str) -> set[str]:
-        norm = self._normalize(text)
-        tokens = set()
-        # 按标点/空格切分后，再取 2-4 字滑窗做中文分词近似
-        for seg in norm.replace("？", " ").replace("?", " ").replace("，", " ").split():
+        tokens: set[str] = set()
+        for piece in self._pieces(text):
+            seg = self._normalize(piece)
             seg = "".join(ch for ch in seg if ch not in _STOPWORDS)
             if not seg:
                 continue
